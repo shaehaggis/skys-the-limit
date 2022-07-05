@@ -1,24 +1,28 @@
+import "./styles.css";
+import items from "./data.json";
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import ItemsList from "./components/ItemsList";
 
-function App() {
-  const [data, setData] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
-    </div>
+    <main>
+      {/* Logo */}
+      <h1>My app</h1>
+      <section>
+        <ItemsList items={items.MostPopularitems} headerTitle="Most Popular" />
+      </section>
+      {/* Tabs */}
+      <section>
+        <ItemsList items={items.food.BBQ} headerTitle="BBQ" />
+        <ItemsList items={items.food.Burgers} headerTitle="Burgers" />
+      </section>
+      <section>
+        <ItemsList items={items.drink.Coffee} headerTitle="Coffee" />
+        <ItemsList items={items.drink.SoftDrink} headerTitle="Soft Drinks" />
+      </section>
+      {/* Shopping Cart */}
+    </main>
   );
-}
+};
 
 export default App;
