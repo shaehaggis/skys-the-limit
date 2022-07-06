@@ -4,13 +4,24 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import items from "../data.json";
 
-const FoodForm = ({ itemName, category, onCancel }) => {
+//removes unneccessary properties from object
+const filterObject = (object) => {
+  let filteredObject = object.filter((item) => item.checked);
+  filteredObject.forEach((object) => {
+    delete object["checked"];
+  });
+
+  return filteredObject;
+};
+
+const FoodForm = ({ itemName, category, quantity, onCancel, computeForm }) => {
   const findIndex = () => {
     return items.food[`${category}`].findIndex(
       (element) => element.name === itemName
     );
   };
 
+  //initialise checkbox state for ingredients
   const initialiseState = (task) => {
     let ingredients =
       task === "add"
@@ -29,83 +40,90 @@ const FoodForm = ({ itemName, category, onCancel }) => {
     return a;
   };
 
+  const [currentStep, setCurrentStep] = useState(1);
   const [added, setAdded] = useState(initialiseState("add"));
   const [removed, setRemoved] = useState(initialiseState("remove"));
   const [extraInfo, setExtraInfo] = useState("");
 
-  const handleAdd = (position) => {
-    const newState = added.map((item, index) => {
+  //get ingredients for add and remove
+  const getIngredients = (arr, stateArr, task) => {
+    const ingredients = arr.map(({ ingredient, price }, i) => {
+      return (
+        <Form.Check
+          inline
+          onChange={() => handleCheckBox(i, stateArr, task)}
+          checked={stateArr[i].checked}
+          key={i}
+          type="checkbox"
+          value={ingredient}
+          label={`${ingredient} $${price}`}
+          name={`${task}-ingredients-${itemName.replace(/\s+/g, "")}`}
+        />
+      );
+    });
+
+    return ingredients;
+  };
+
+  //get ingredients for add and remove
+  const AddIngredients = getIngredients(items.ingredients, added, "add");
+  const RemoveIngredients = getIngredients(
+    items.food[`${category}`][findIndex()].ingredients,
+    removed,
+    "remove"
+  );
+
+  //controls checkbox state
+  const handleCheckBox = (position, arr, task) => {
+    const newState = arr.map((item, index) => {
       if (index === position) {
         return { ...item, checked: !item.checked };
       }
       return item;
     });
 
-    setAdded(newState);
+    if (task === "add") {
+      setAdded(newState);
+    } else {
+      setRemoved(newState);
+    }
   };
 
-  const handleRemove = (position) => {
-    const newState = removed.map((item, index) => {
-      if (index === position) {
-        return { ...item, checked: !item.checked };
-      }
-      return item;
-    });
-
-    setRemoved(newState);
-  };
-
-  const onCancelClick = () => {
+  //when cancel button is clicked
+  const exitForm = () => {
     setAdded(initialiseState("add"));
     setRemoved(initialiseState("remove"));
     setExtraInfo("");
+    setCurrentStep(1);
     onCancel();
   };
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    console.log(added);
-    console.log(removed);
-  };
 
-  const AllIngredients = items.ingredients.map(({ ingredient, price }, i) => {
-    return (
-      <Form.Check
-        inline
-        onChange={() => handleAdd(i)}
-        checked={added[i].checked}
-        key={i}
-        type="checkbox"
-        value={ingredient}
-        label={`${ingredient} $${price}`}
-        name={`add-ingredients-${itemName.replace(/\s+/g, "")}`}
-      />
-    );
-  });
+    const formData = {
+      added: filterObject(added),
+      removed: filterObject(removed),
+      information: extraInfo,
+    };
+    computeForm(formData);
 
-  const MyIngredients = items.food[`${category}`][findIndex()].ingredients.map(
-    (item, i) => {
-      return (
-        <Form.Check
-          inline
-          onChange={() => handleRemove(i)}
-          checked={removed[i].checked}
-          key={i}
-          type="checkbox"
-          value={item.ingredient}
-          label={`${item.ingredient} $${item.price}`}
-          name={`remove-ingredients-${itemName.replace(/\s+/g, "")}`}
-        />
-      );
+    if (currentStep !== quantity) {
+      setCurrentStep(currentStep + 1);
+      setAdded(initialiseState("add"));
+      setRemoved(initialiseState("remove"));
+      setExtraInfo("");
+    } else {
+      exitForm();
     }
-  );
+  };
 
   return (
     <Form onSubmit={onFormSubmit}>
       <h2>Add Ingredients:</h2>
-      <div className="mb-3">{AllIngredients}</div>
+      <div className="mb-3">{AddIngredients}</div>
       <h2>Remove Ingredients</h2>
-      <div className="mb-3">{MyIngredients}</div>
+      <div className="mb-3">{RemoveIngredients}</div>
       <h2>Additional Comments:</h2>
       <Form.Control
         onChange={(e) => setExtraInfo(e.target.value)}
@@ -113,18 +131,13 @@ const FoodForm = ({ itemName, category, onCancel }) => {
         rows={6}
       />
       <ButtonGroup>
-        <Button
-          onClick={() => onCancelClick()}
-          className="me-3"
-          variant="danger"
-        >
+        <Button onClick={() => exitForm()} className="me-3" variant="danger">
           Cancel
         </Button>
         <Button className="me-3" type="submit" variant="dark">
           Confirm
         </Button>
       </ButtonGroup>
-      <div>{extraInfo}</div>
     </Form>
   );
 };

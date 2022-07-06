@@ -237,7 +237,7 @@ img {
 }
 
 footer {
-  display: none;
+  display: flex;
   align-items: center;
   width: 98vw;
   position: fixed;
@@ -256,7 +256,7 @@ footer {
 
 .running-container div {
   margin-left: 5%;
-  font-size: 6vmin;
+  font-size: 3vmin;
   color: white;
 }
 
@@ -265,10 +265,6 @@ footer button {
   width: 27%;
   padding: 1%;
   font-size: 5vmin;
-}
-
-.shopping-cart {
-  display: none;
 }
 
 .cart-flex {

@@ -4,7 +4,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import items from "../data.json";
 
-const CoffeeForm = ({ itemName, onCancel }) => {
+const CoffeeForm = ({ itemName, onCancel, quantity, computeForm }) => {
+  const [currentStep, setCurrentStep] = useState(1);
   const [selected, setSelected] = useState("Full Cream");
   const [extraInfo, setExtraInfo] = useState("");
 
@@ -23,13 +24,31 @@ const CoffeeForm = ({ itemName, onCancel }) => {
     );
   });
 
-  const onCancelClick = () => {
+  const exitForm = () => {
     setSelected("Full Cream");
+    setExtraInfo("");
+    setCurrentStep(1);
     onCancel();
   };
 
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+    computeForm({
+      MilkType: selected,
+      extraInfo: extraInfo,
+    });
+
+    if (currentStep !== quantity) {
+      setCurrentStep(currentStep + 1);
+      setSelected("Full Cream");
+      setExtraInfo("");
+    } else {
+      exitForm();
+    }
+  };
+
   return (
-    <Form>
+    <Form onSubmit={onFormSubmit}>
       <h2>Milk Type:</h2>
       <div className="mb-3">{MilkTypes}</div>
       <h2>Additional Comments:</h2>
@@ -40,11 +59,7 @@ const CoffeeForm = ({ itemName, onCancel }) => {
         value={extraInfo}
       />
       <ButtonGroup>
-        <Button
-          onClick={() => onCancelClick()}
-          className="me-3"
-          variant="danger"
-        >
+        <Button onClick={() => exitForm()} className="me-3" variant="danger">
           Cancel
         </Button>
         <Button className="me-3" type="submit" variant="dark">

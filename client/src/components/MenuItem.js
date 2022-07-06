@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QuantityCounter from "./QuantityCounter";
 import MenuForm from "./MenuForm";
 
-const MenuItem = ({ itemName, imageSrc, price, category }) => {
+const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
   const [quantity, setQuantity] = useState(0);
   const [activeForm, setActiveForm] = useState("none");
 
@@ -22,6 +22,25 @@ const MenuItem = ({ itemName, imageSrc, price, category }) => {
 
   const onCancel = () => {
     setActiveForm("none");
+  };
+
+  const computeForm = (formData) => {
+    let cartItem = Object.assign(
+      { item: itemName, price: price, totalPrice: price, imageSrc: imageSrc },
+      formData
+    );
+    if (formData.hasOwnProperty("added")) {
+      let sum = parseFloat(price);
+      formData.added.forEach(({ price }) => {
+        sum += parseFloat(price);
+      });
+      formData.removed.forEach(({ price }) => {
+        sum -= parseFloat(price);
+      });
+
+      cartItem.totalPrice = sum.toFixed(2);
+    }
+    newCartItem(cartItem);
   };
 
   return (
@@ -58,6 +77,7 @@ const MenuItem = ({ itemName, imageSrc, price, category }) => {
           category={category}
           item={itemName}
           onCancel={onCancel}
+          computeForm={computeForm}
         />
       </section>
     </section>

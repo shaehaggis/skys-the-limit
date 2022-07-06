@@ -1,7 +1,7 @@
 import React from "react";
 import MenuItem from "./MenuItem";
 
-const ItemsList = ({ headerTitle, items }) => {
+const ItemsList = ({ headerTitle, items, newCartItem }) => {
   const renderedItems = items.map((item) => {
     return (
       <MenuItem
@@ -10,6 +10,7 @@ const ItemsList = ({ headerTitle, items }) => {
         imageSrc={item.imageSrc}
         price={item.price}
         category={headerTitle}
+        newCartItem={newCartItem}
       />
     );
   });
