@@ -11,13 +11,17 @@ const FoodForm = ({ itemName, category, onCancel }) => {
     );
   };
 
-  const initialiseAdd = () => {
-    let size = items.ingredients.length;
-    const a = new Array(size);
+  const initialiseState = (task) => {
+    let ingredients =
+      task === "add"
+        ? items.ingredients
+        : items.food[`${category}`][findIndex()].ingredients;
+    let size = ingredients.length;
+    let a = new Array(size);
     for (let i = 0; i < size; i++) {
       a[i] = {
-        ingredient: `${items.ingredients[i].ingredient}`,
-        price: `${items.ingredients[i].price}`,
+        ingredient: `${ingredients[i].ingredient}`,
+        price: `${ingredients[i].price}`,
         checked: false,
       };
     }
@@ -25,14 +29,8 @@ const FoodForm = ({ itemName, category, onCancel }) => {
     return a;
   };
 
-  const [added, setAdded] = useState(initialiseAdd());
-
-  const [removed, setRemoved] = useState(() => {
-    return new Array(
-      items.food[`${category}`][findIndex()].ingredients.length
-    ).fill(false);
-  });
-
+  const [added, setAdded] = useState(initialiseState("add"));
+  const [removed, setRemoved] = useState(initialiseState("remove"));
   const [extraInfo, setExtraInfo] = useState("");
 
   const handleAdd = (position) => {
@@ -48,19 +46,18 @@ const FoodForm = ({ itemName, category, onCancel }) => {
 
   const handleRemove = (position) => {
     const newState = removed.map((item, index) => {
-      return index === position ? !item : item;
+      if (index === position) {
+        return { ...item, checked: !item.checked };
+      }
+      return item;
     });
 
     setRemoved(newState);
   };
 
   const onCancelClick = () => {
-    setAdded(new Array(items.ingredients.length).fill(false));
-    setRemoved(
-      new Array(items.food[`${category}`][findIndex()].ingredients.length).fill(
-        false
-      )
-    );
+    setAdded(initialiseState("add"));
+    setRemoved(initialiseState("remove"));
     setExtraInfo("");
     onCancel();
   };
@@ -68,6 +65,7 @@ const FoodForm = ({ itemName, category, onCancel }) => {
   const onFormSubmit = (event) => {
     event.preventDefault();
     console.log(added);
+    console.log(removed);
   };
 
   const AllIngredients = items.ingredients.map(({ ingredient, price }, i) => {
@@ -86,16 +84,16 @@ const FoodForm = ({ itemName, category, onCancel }) => {
   });
 
   const MyIngredients = items.food[`${category}`][findIndex()].ingredients.map(
-    (ingredient, i) => {
+    (item, i) => {
       return (
         <Form.Check
           inline
           onChange={() => handleRemove(i)}
-          checked={removed[i]}
+          checked={removed[i].checked}
           key={i}
           type="checkbox"
-          value={ingredient}
-          label={ingredient}
+          value={item.ingredient}
+          label={`${item.ingredient} $${item.price}`}
           name={`remove-ingredients-${itemName.replace(/\s+/g, "")}`}
         />
       );
@@ -126,8 +124,6 @@ const FoodForm = ({ itemName, category, onCancel }) => {
           Confirm
         </Button>
       </ButtonGroup>
-      {/* <div>{added}</div> */}
-      <div>{removed}</div>
       <div>{extraInfo}</div>
     </Form>
   );

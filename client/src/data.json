@@ -21,21 +21,48 @@
                     "name": "Sausage Sizzle",
                     "price": "2.50",
                     "imageSrc": "https://cdn.shopify.com/s/files/1/1827/5109/articles/mr-perfect-sausage-sizzle_900x.jpg?v=1581678763",
-                    "ingredients": ["Beef Sausage"]
+                    "ingredients": [
+                        {
+                            "ingredient": "Beef Sausage",
+                            "price": "2.00"
+                        }
+                    ]
                 },
                 {
                     "id": 4,
                     "name": "Bacon & Egg Sandwich",
                     "price": "5.00",
                     "imageSrc": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/2/14/0/FNK_Maple-Bacon-Grilled-Cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1382542424660.jpeg",
-                    "ingredients": ["Bacon", "Egg"]
+                    "ingredients": [
+                        {
+                            "ingredient": "Bacon",
+                            "price": "2.00"
+                        }, 
+                        {
+                            "ingredient": "Egg",
+                            "price": "2.00"
+                        }
+                    ]
                 },
                 {
                     "id": 5,
                     "name": "Deluxe (Bacon, Egg & Sausage)",
                     "price": "8.00",
                     "imageSrc": "https://www.finedininglovers.com/sites/g/files/xknfdk626/files/styles/open_graph_image/public/Original_5593_StockFood-00949621.jpg.jpg?itok=fqNi5pz2",
-                    "ingredients": ["Bacon", "Egg", "Beef Sausage"]
+                    "ingredients": [
+                        {
+                            "ingredient": "Bacon",
+                            "price": "2.00"
+                        }, 
+                        {
+                            "ingredient": "Egg",
+                            "price": "2.00"
+                        },
+                        {
+                            "ingredient": "Beef Sausage",
+                            "price": "2.00"
+                        }
+                    ]
                 }
             ],
             "Burgers": [
@@ -44,21 +71,60 @@
                     "name": "Chicken Burger",
                     "price": "6.00",
                     "imageSrc": "https://images.immediate.co.uk/production/volatile/sites/2/2017/06/Butchies-2-1.jpg",
-                    "ingredients": ["Chicken Patty", "Lettuce", "Tomato"]
+                    "ingredients": [
+                        {
+                            "ingredient": "Chicken Patty",
+                            "price": "3.00"
+                        }, 
+                        {
+                            "ingredient": "Lettuce",
+                            "price": "0.50"
+                        },
+                        {
+                            "ingredient": "Tomato",
+                            "price": "0.50"
+                        }
+                    ]
                 },
                 {
                     "id": 7,
                     "name": "Beef Burger",
                     "price": "6.00",
                     "imageSrc": "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/beef-burger-with-caramelised-onion-jam-d6d4260d.jpg",
-                    "ingredients": ["Beef Patty", "Lettuce", "Tomato"]
+                    "ingredients": [
+                        {
+                            "ingredient": "Beef Patty",
+                            "price": "3.00"
+                        }, 
+                        {
+                            "ingredient": "Lettuce",
+                            "price": "0.50"
+                        },
+                        {
+                            "ingredient": "Tomato",
+                            "price": "0.50"
+                        }
+                    ]
                 },
                 {
                     "id": 8,
                     "name": "Veggie Burger",
                     "price": "8.00",
                     "imageSrc": "https://assets.epicurious.com/photos/5e4c65cfd57b3b000872c652/1:1/w_2763,h_2763,c_limit/VeggieBurger_RECIPE_IG_021320_516_VOG_final.jpg",
-                    "ingredients": ["Beyond Patty", "Lettuce", "Tomato"]
+                    "ingredients": [
+                        {
+                            "ingredient": "Beyond Patty",
+                            "price": "2.00"
+                        }, 
+                        {
+                            "ingredient": "Lettuce",
+                            "price": "0.50"
+                        },
+                        {
+                            "ingredient": "Tomato",
+                            "price": "0.50"
+                        }
+                    ]
 
                 }
             ]
