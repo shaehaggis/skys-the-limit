@@ -297,8 +297,7 @@ footer button {
 
 .cart-wrapper-price,
 .cart-wrapper-add,
-.cart-wrapper-remove,
-.cart-wrapper-comments {
+.cart-wrapper-remove {
   height: 10vmin;
 }
 
@@ -345,6 +344,10 @@ footer button {
 
 .cart-wrapper-remove p {
   color: red;
+}
+
+.cart-wrapper-add p {
+  color: green;
 }
 
 .cart-wrapper-comments p {

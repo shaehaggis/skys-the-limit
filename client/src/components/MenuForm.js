@@ -24,7 +24,7 @@ const MenuForm = ({ item, quantity, category, onCancel, computeForm }) => {
         />
       );
     } else {
-      return [];
+      return "";
     }
   };
 

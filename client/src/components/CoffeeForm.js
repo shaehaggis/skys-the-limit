@@ -35,7 +35,7 @@ const CoffeeForm = ({ itemName, onCancel, quantity, computeForm }) => {
     event.preventDefault();
     computeForm({
       MilkType: selected,
-      extraInfo: extraInfo,
+      information: extraInfo,
     });
 
     if (currentStep !== quantity) {

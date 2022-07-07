@@ -18,6 +18,16 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
     if (quantity > 0) {
       setActiveForm("block");
     }
+    if (category === "Soft Drinks") {
+      newCartItem({
+        item: itemName,
+        imageSrc: imageSrc,
+        category: category,
+        quantity: quantity,
+        price: price,
+        totalPrice: price * quantity,
+      });
+    }
   };
 
   const onCancel = () => {
@@ -26,7 +36,13 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
 
   const computeForm = (formData) => {
     let cartItem = Object.assign(
-      { item: itemName, price: price, totalPrice: price, imageSrc: imageSrc },
+      {
+        item: itemName,
+        price: price,
+        totalPrice: price,
+        imageSrc: imageSrc,
+        category: category,
+      },
       formData
     );
     if (formData.hasOwnProperty("added")) {

@@ -1,60 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import CartItemFood from "./CartItemFood";
+import CartItemDrink from "./CartItemDrink";
+import Button from "react-bootstrap/Button";
 
-const ShoppingCart = ({ shoppingCart, toggleCart }) => {
-  useEffect(() => {
-    console.log(shoppingCart);
-  }, [shoppingCart]);
-
+const ShoppingCart = ({ shoppingCart, price, toggleCart, remove }) => {
   const renderedShoppingCart = shoppingCart.map((item, index) => {
-    return (
-      <div key={index} className="cart-flex">
-        <div className="img-wrapper">
-          <div>
-            <img alt={item.item} className="cart-img" src={item.imageSrc} />
-          </div>
-        </div>
-        <div className="cart-wrapper-price">
-          <p>
-            ${item.price} | {item.item}
-          </p>
-        </div>
-        <div className="cart-wrapper-add">
-          <p>
-            +{" "}
-            {item.added.map((item, index) => {
-              return <span key={index}>{item.ingredient},&nbsp;</span>;
-            })}
-          </p>
-        </div>
-        <div className="cart-wrapper-remove">
-          <p>
-            -{" "}
-            {item.removed.map((item, index) => {
-              return <span key={index}>{item.ingredient}</span>;
-            })}
-          </p>
-        </div>
-        <div className="cart-wrapper-comments">
-          <p>
-            <em>{item.information}</em>
-          </p>
-        </div>
-        <div>
-          <p>
-            <strong>Total Item Price: ${item.totalPrice}</strong>
-          </p>
-        </div>
-        <div className="cart-button-container">
-          <div className="cart-button-wrapper">
-            <div className="cart-remove-button-container">
-              <button className="cart-remove-button">Remove</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    if (item.category === "BBQ" || item.category === "Burgers") {
+      return (
+        <CartItemFood key={index} data={item} remove={remove} index={index} />
+      );
+    } else {
+      return (
+        <CartItemDrink key={index} data={item} remove={remove} index={index} />
+      );
+    }
   });
 
   return (
@@ -66,8 +27,12 @@ const ShoppingCart = ({ shoppingCart, toggleCart }) => {
         <span>Back to Menu</span>
       </button>
       {renderedShoppingCart}
-      <div className="total-price-container"></div>
-      <div className="purchase-button-container"></div>
+      <div className="total-price-container">Total Price: ${price}</div>
+      <div className="purchase-button-container">
+        <Button className="me-3" variant="dark">
+          Confirm Payment
+        </Button>
+      </div>
     </section>
   );
 };

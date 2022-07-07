@@ -28,10 +28,27 @@ const App = () => {
   }, [totalQuantity]);
 
   const newCartItem = (formData) => {
-    console.log(formData);
     setShoppingCart((current) => [...current, formData]);
     setTotalPrice(parseFloat(totalPrice) + parseFloat(formData.totalPrice));
-    setTotalQuantity(totalQuantity + 1);
+    if (formData.hasOwnProperty("quantity")) {
+      setTotalQuantity(totalQuantity + formData.quantity);
+    } else {
+      setTotalQuantity(totalQuantity + 1);
+    }
+  };
+
+  const removeCartItem = (index) => {
+    const price = shoppingCart[index].totalPrice;
+    const quantity = shoppingCart[index].hasOwnProperty("quantity")
+      ? shoppingCart[index].quantity
+      : 1;
+    if (totalQuantity - quantity === 0) {
+      setDisplayCart("none");
+      setDisplayMenu("block");
+    }
+    setShoppingCart(shoppingCart.filter((item, i) => i !== index));
+    setTotalQuantity(totalQuantity - quantity);
+    setTotalPrice(totalPrice - price);
   };
 
   const changeDisplayed = () => {
@@ -100,7 +117,12 @@ const App = () => {
         />
       </div>
       <div style={{ display: displayCart }}>
-        <ShoppingCart shoppingCart={shoppingCart} toggleCart={toggleCart} />
+        <ShoppingCart
+          price={totalPrice.toFixed(2)}
+          shoppingCart={shoppingCart}
+          toggleCart={toggleCart}
+          remove={removeCartItem}
+        />
       </div>
     </main>
   );
