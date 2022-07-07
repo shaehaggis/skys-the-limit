@@ -41,9 +41,11 @@ const FoodForm = ({ itemName, category, quantity, onCancel, computeForm }) => {
   };
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [added, setAdded] = useState(initialiseState("add"));
-  const [removed, setRemoved] = useState(initialiseState("remove"));
-  const [extraInfo, setExtraInfo] = useState("");
+  const [formData, setFormData] = useState({
+    added: initialiseState("add"),
+    removed: initialiseState("remove"),
+    information: "",
+  });
 
   //get ingredients for add and remove
   const getIngredients = (arr, stateArr, task) => {
@@ -66,10 +68,14 @@ const FoodForm = ({ itemName, category, quantity, onCancel, computeForm }) => {
   };
 
   //get ingredients for add and remove
-  const AddIngredients = getIngredients(items.ingredients, added, "add");
+  const AddIngredients = getIngredients(
+    items.ingredients,
+    formData.added,
+    "add"
+  );
   const RemoveIngredients = getIngredients(
     items.food[`${category}`][findIndex()].ingredients,
-    removed,
+    formData.removed,
     "remove"
   );
 
@@ -83,17 +89,19 @@ const FoodForm = ({ itemName, category, quantity, onCancel, computeForm }) => {
     });
 
     if (task === "add") {
-      setAdded(newState);
+      setFormData({ ...formData, added: newState });
     } else {
-      setRemoved(newState);
+      setFormData({ ...formData, removed: newState });
     }
   };
 
   //when cancel button is clicked
   const exitForm = () => {
-    setAdded(initialiseState("add"));
-    setRemoved(initialiseState("remove"));
-    setExtraInfo("");
+    setFormData({
+      added: initialiseState("add"),
+      removed: initialiseState("remove"),
+      information: "",
+    });
     setCurrentStep(1);
     onCancel();
   };
@@ -101,18 +109,21 @@ const FoodForm = ({ itemName, category, quantity, onCancel, computeForm }) => {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    const formData = {
-      added: filterObject(added),
-      removed: filterObject(removed),
-      information: extraInfo,
+    const filteredData = {
+      added: filterObject(formData.added),
+      removed: filterObject(formData.removed),
+      information: formData.information,
     };
-    computeForm(formData);
+
+    computeForm(filteredData);
 
     if (currentStep !== quantity) {
       setCurrentStep(currentStep + 1);
-      setAdded(initialiseState("add"));
-      setRemoved(initialiseState("remove"));
-      setExtraInfo("");
+      setFormData({
+        added: initialiseState("add"),
+        removed: initialiseState("remove"),
+        information: "",
+      });
     } else {
       exitForm();
     }
@@ -126,7 +137,9 @@ const FoodForm = ({ itemName, category, quantity, onCancel, computeForm }) => {
       <div className="mb-3">{RemoveIngredients}</div>
       <h2>Additional Comments:</h2>
       <Form.Control
-        onChange={(e) => setExtraInfo(e.target.value)}
+        onChange={(e) =>
+          setFormData({ ...formData, information: e.target.value })
+        }
         as="textarea"
         rows={6}
       />

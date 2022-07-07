@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 
 const CartItemFood = ({ data, remove, index }) => {
-  const [displayAdded, setDisplayAdded] = useState("none");
-  const [displayRemoved, setDisplayRemoved] = useState("none");
-  const [displayInfo, setDisplayInfo] = useState("none");
+  const [display, setDisplay] = useState({
+    added: "none",
+    removed: "none",
+    info: "none",
+  });
 
   const onRemButtonClick = () => {
     remove(index);
   };
 
   useEffect(() => {
-    if (data.added.length > 0) {
-      setDisplayAdded("block");
-    }
-    if (data.removed.length > 0) {
-      setDisplayRemoved("block");
-    }
-
-    if (data.information !== "") {
-      setDisplayInfo("block");
-    }
+    const added = data.added.length > 0 ? "block" : "none";
+    const removed = data.removed.length > 0 ? "block" : "none";
+    const info = data.information !== "" ? "block" : "none";
+    setDisplay({
+      added: added,
+      removed: removed,
+      info: info,
+    });
   }, [data.added.length, data.removed.length, data.information]);
 
   return (
@@ -35,7 +35,7 @@ const CartItemFood = ({ data, remove, index }) => {
           ${data.price} | {data.item}
         </p>
       </div>
-      <div style={{ display: displayAdded }} className="cart-wrapper-add">
+      <div style={{ display: display.added }} className="cart-wrapper-add">
         <p>
           +{" "}
           {data.added.map((item, index) => {
@@ -47,7 +47,7 @@ const CartItemFood = ({ data, remove, index }) => {
           })}
         </p>
       </div>
-      <div style={{ display: displayRemoved }} className="cart-wrapper-remove">
+      <div style={{ display: display.removed }} className="cart-wrapper-remove">
         <p>
           -{" "}
           {data.removed.map((item, index) => {
@@ -55,7 +55,7 @@ const CartItemFood = ({ data, remove, index }) => {
           })}
         </p>
       </div>
-      <div style={{ display: displayInfo }} className="cart-wrapper-comments">
+      <div style={{ display: display.info }} className="cart-wrapper-comments">
         <p>
           <em>{data.information}</em>
         </p>

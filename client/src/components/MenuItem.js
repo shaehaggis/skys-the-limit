@@ -15,9 +15,6 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
   };
 
   const onButtonClick = () => {
-    if (quantity > 0) {
-      setActiveForm("block");
-    }
     if (category === "Soft Drinks") {
       newCartItem({
         item: itemName,
@@ -28,10 +25,21 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
         totalPrice: price * quantity,
       });
     }
+
+    if (quantity > 0) {
+      setActiveForm("block");
+    }
   };
 
-  const onCancel = () => {
-    setActiveForm("none");
+  const findNewTotal = (formData, sum) => {
+    formData.added.forEach(({ price }) => {
+      sum += parseFloat(price);
+    });
+    formData.removed.forEach(({ price }) => {
+      sum -= parseFloat(price);
+    });
+
+    return sum;
   };
 
   const computeForm = (formData) => {
@@ -45,15 +53,9 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
       },
       formData
     );
+    console.log(formData);
     if (formData.hasOwnProperty("added")) {
-      let sum = parseFloat(price);
-      formData.added.forEach(({ price }) => {
-        sum += parseFloat(price);
-      });
-      formData.removed.forEach(({ price }) => {
-        sum -= parseFloat(price);
-      });
-
+      let sum = findNewTotal(formData, parseFloat(price));
       cartItem.totalPrice = sum.toFixed(2);
     }
     newCartItem(cartItem);
@@ -92,7 +94,7 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
           quantity={quantity}
           category={category}
           item={itemName}
-          onCancel={onCancel}
+          onCancel={() => setActiveForm("none")}
           computeForm={computeForm}
         />
       </section>

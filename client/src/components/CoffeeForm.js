@@ -6,14 +6,18 @@ import items from "../data.json";
 
 const CoffeeForm = ({ itemName, onCancel, quantity, computeForm }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selected, setSelected] = useState("Full Cream");
-  const [extraInfo, setExtraInfo] = useState("");
+  const [formData, setFormData] = useState({
+    selected: "Full Cream",
+    information: "",
+  });
 
   const MilkTypes = items["milk types"].map((type, index) => {
     return (
       <Form.Check
-        onChange={(e) => setSelected(e.currentTarget.value)}
-        checked={selected === type.name}
+        onChange={(e) =>
+          setFormData({ ...formData, selected: e.currentTarget.value })
+        }
+        checked={formData.selected === type.name}
         inline
         key={index}
         label={type.name}
@@ -25,23 +29,24 @@ const CoffeeForm = ({ itemName, onCancel, quantity, computeForm }) => {
   });
 
   const exitForm = () => {
-    setSelected("Full Cream");
-    setExtraInfo("");
+    setFormData({
+      selected: "Full Cream",
+      information: "",
+    });
     setCurrentStep(1);
     onCancel();
   };
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    computeForm({
-      MilkType: selected,
-      information: extraInfo,
-    });
+    computeForm(formData);
 
     if (currentStep !== quantity) {
       setCurrentStep(currentStep + 1);
-      setSelected("Full Cream");
-      setExtraInfo("");
+      setFormData({
+        selected: "Full Cream",
+        information: "",
+      });
     } else {
       exitForm();
     }
@@ -53,10 +58,12 @@ const CoffeeForm = ({ itemName, onCancel, quantity, computeForm }) => {
       <div className="mb-3">{MilkTypes}</div>
       <h2>Additional Comments:</h2>
       <Form.Control
-        onChange={(e) => setExtraInfo(e.target.value)}
+        onChange={(e) =>
+          setFormData({ ...formData, information: e.target.value })
+        }
         as="textarea"
         rows={6}
-        value={extraInfo}
+        value={formData.information}
       />
       <ButtonGroup>
         <Button onClick={() => exitForm()} className="me-3" variant="danger">

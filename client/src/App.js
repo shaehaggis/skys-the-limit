@@ -11,30 +11,37 @@ const App = () => {
     food: "block",
     drink: "none",
   });
-
+  const [display, setDisplay] = useState({
+    footer: "none",
+    cart: "none",
+    menu: "block",
+  });
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [displayFooter, setDisplayFooter] = useState("none");
-  const [displayCart, setDisplayCart] = useState("none");
-  const [displayMenu, setDisplayMenu] = useState("block");
+  const [cartInfo, setCartInfo] = useState({
+    totalPrice: 0.0,
+    totalQuantity: 0,
+  });
 
   useEffect(() => {
-    if (totalQuantity > 0) {
-      setDisplayFooter("block");
+    if (cartInfo.totalQuantity > 0) {
+      setDisplay({ ...display, footer: "block" });
     } else {
-      setDisplayFooter("none");
+      setDisplay({ ...display, footer: "none" });
     }
-  }, [totalQuantity]);
+  }, [cartInfo.totalQuantity]);
 
   const newCartItem = (formData) => {
+    const itemPrice = cartInfo.totalPrice + parseFloat(formData.totalPrice);
     setShoppingCart((current) => [...current, formData]);
-    setTotalPrice(parseFloat(totalPrice) + parseFloat(formData.totalPrice));
-    if (formData.hasOwnProperty("quantity")) {
-      setTotalQuantity(totalQuantity + formData.quantity);
-    } else {
-      setTotalQuantity(totalQuantity + 1);
-    }
+    const quantity = formData.hasOwnProperty("quantity")
+      ? cartInfo.totalQuantity + formData.quantity
+      : cartInfo.totalQuantity + 1;
+
+    setCartInfo({
+      ...cartInfo,
+      totalPrice: itemPrice,
+      totalQuantity: quantity,
+    });
   };
 
   const removeCartItem = (index) => {
@@ -42,13 +49,15 @@ const App = () => {
     const quantity = shoppingCart[index].hasOwnProperty("quantity")
       ? shoppingCart[index].quantity
       : 1;
-    if (totalQuantity - quantity === 0) {
-      setDisplayCart("none");
-      setDisplayMenu("block");
+    if (cartInfo.totalQuantity - quantity === 0) {
+      setDisplay({ ...display, cart: "none", menu: "block" });
     }
     setShoppingCart(shoppingCart.filter((item, i) => i !== index));
-    setTotalQuantity(totalQuantity - quantity);
-    setTotalPrice(totalPrice - price);
+    setCartInfo({
+      ...cartInfo,
+      totalPrice: cartInfo.totalPrice - price,
+      totalQuantity: cartInfo.totalQuantity - quantity,
+    });
   };
 
   const changeDisplayed = () => {
@@ -60,14 +69,18 @@ const App = () => {
   };
 
   const toggleCart = () => {
-    if (displayCart === "none") {
-      setDisplayCart("block");
-      setDisplayMenu("none");
-      setDisplayFooter("none");
+    if (display.cart === "none") {
+      setDisplay({
+        cart: "block",
+        menu: "none",
+        footer: "none",
+      });
     } else {
-      setDisplayCart("none");
-      setDisplayMenu("block");
-      setDisplayFooter("block");
+      setDisplay({
+        cart: "none",
+        menu: "block",
+        footer: "block",
+      });
     }
   };
 
@@ -75,7 +88,7 @@ const App = () => {
     <main>
       {/* Logo */}
       <h1>My app</h1>
-      <div style={{ display: displayMenu }}>
+      <div style={{ display: display.menu }}>
         <section>
           <ItemsList
             items={items.MostPopularitems}
@@ -109,16 +122,16 @@ const App = () => {
           />
         </section>
       </div>
-      <div style={{ display: displayFooter }}>
+      <div style={{ display: display.footer }}>
         <Footer
-          price={totalPrice.toFixed(2)}
-          quantity={totalQuantity}
+          price={cartInfo.totalPrice.toFixed(2)}
+          quantity={cartInfo.totalQuantity}
           toggleCart={toggleCart}
         />
       </div>
-      <div style={{ display: displayCart }}>
+      <div style={{ display: display.cart }}>
         <ShoppingCart
-          price={totalPrice.toFixed(2)}
+          price={cartInfo.totalPrice.toFixed(2)}
           shoppingCart={shoppingCart}
           toggleCart={toggleCart}
           remove={removeCartItem}

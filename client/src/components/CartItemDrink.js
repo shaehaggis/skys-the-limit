@@ -5,7 +5,7 @@ const CartItemDrink = ({ data, remove, index }) => {
   const [displayInfo, setDisplayInfo] = useState("none");
 
   useEffect(() => {
-    if (data.information !== undefined) {
+    if (data.information !== "") {
       setDisplayInfo("block");
     }
   }, [data.information]);
