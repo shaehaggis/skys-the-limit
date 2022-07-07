@@ -53,7 +53,6 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
       },
       formData
     );
-    console.log(formData);
     if (formData.hasOwnProperty("added")) {
       let sum = findNewTotal(formData, parseFloat(price));
       cartItem.totalPrice = sum.toFixed(2);
