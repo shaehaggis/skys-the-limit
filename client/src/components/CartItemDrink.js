@@ -5,7 +5,7 @@ const CartItemDrink = ({ data, remove, index }) => {
   const [displayInfo, setDisplayInfo] = useState("none");
 
   useEffect(() => {
-    if (data.information !== "") {
+    if (data.information !== "" || data.information !== undefined) {
       setDisplayInfo("block");
     }
   }, [data.information]);
@@ -15,8 +15,8 @@ const CartItemDrink = ({ data, remove, index }) => {
   };
 
   const renderedItem = () => {
-    if (data.hasOwnProperty("MilkType")) {
-      return <div>Milk Type: {data.MilkType}</div>;
+    if (data.hasOwnProperty("selected")) {
+      return <div>Milk Type: {data.selected}</div>;
     } else if (data.hasOwnProperty("quantity")) {
       return <div>Quantity: {data.quantity}</div>;
     } else {
