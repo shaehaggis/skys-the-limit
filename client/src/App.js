@@ -23,24 +23,28 @@ const App = () => {
   });
 
   useEffect(() => {
-    if (cartInfo.totalQuantity > 0) {
-      setDisplay({ ...display, footer: "block" });
+    if (cartInfo.totalQuantity > 0 && display.cart !== "block") {
+      setDisplay((display) => {
+        return { ...display, footer: "block" };
+      });
     } else {
-      setDisplay({ ...display, footer: "none" });
+      setDisplay((display) => {
+        return { ...display, footer: "none" };
+      });
     }
-  }, [cartInfo.totalQuantity]);
+  }, [cartInfo.totalQuantity, display.cart]);
 
   const newCartItem = (formData) => {
     const itemPrice = cartInfo.totalPrice + parseFloat(formData.totalPrice);
     setShoppingCart((current) => [...current, formData]);
-    const quantity = formData.hasOwnProperty("quantity")
+    const newQuantity = formData.hasOwnProperty("quantity")
       ? cartInfo.totalQuantity + formData.quantity
       : cartInfo.totalQuantity + 1;
 
     setCartInfo({
       ...cartInfo,
       totalPrice: itemPrice,
-      totalQuantity: quantity,
+      totalQuantity: newQuantity,
     });
   };
 
