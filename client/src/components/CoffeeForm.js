@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import Form from "react-bootstrap/Form";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Button from "react-bootstrap/Button";
 import items from "../data.json";
 
-const CoffeeForm = ({ itemName, onCancel, quantity, computeForm }) => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
-    selected: "Full Cream",
-    information: "",
-  });
+const CoffeeForm = forwardRef(({ formData, setFormData, itemName }, ref) => {
+  const [milkType, setMilkType] = useState("Full Cream");
+
+  useImperativeHandle(ref, () => ({
+    triggerSubmit() {
+      setMilkType("Full Cream");
+      return { MilkType: milkType };
+    },
+    cancel() {
+      setMilkType("Full Cream");
+    },
+  }));
 
   const MilkTypes = items["milk types"].map((type, index) => {
     return (
       <Form.Check
-        onChange={(e) =>
-          setFormData({ ...formData, selected: e.currentTarget.value })
-        }
-        checked={formData.selected === type.name}
+        onChange={(e) => setMilkType(e.currentTarget.value)}
+        checked={milkType === type.name}
         inline
         key={index}
         label={type.name}
@@ -28,53 +30,12 @@ const CoffeeForm = ({ itemName, onCancel, quantity, computeForm }) => {
     );
   });
 
-  const exitForm = () => {
-    setFormData({
-      selected: "Full Cream",
-      information: "",
-    });
-    setCurrentStep(1);
-    onCancel();
-  };
-
-  const onFormSubmit = (event) => {
-    event.preventDefault();
-    computeForm(formData);
-
-    if (currentStep !== quantity) {
-      setCurrentStep(currentStep + 1);
-      setFormData({
-        selected: "Full Cream",
-        information: "",
-      });
-    } else {
-      exitForm();
-    }
-  };
-
   return (
-    <Form onSubmit={onFormSubmit}>
+    <div>
       <h2>Milk Type:</h2>
       <div className="mb-3">{MilkTypes}</div>
-      <h2>Additional Comments:</h2>
-      <Form.Control
-        onChange={(e) =>
-          setFormData({ ...formData, information: e.target.value })
-        }
-        as="textarea"
-        rows={6}
-        value={formData.information}
-      />
-      <ButtonGroup>
-        <Button onClick={() => exitForm()} className="me-3" variant="danger">
-          Cancel
-        </Button>
-        <Button className="me-3" type="submit" variant="dark">
-          Confirm
-        </Button>
-      </ButtonGroup>
-    </Form>
+    </div>
   );
-};
+});
 
 export default CoffeeForm;

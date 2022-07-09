@@ -15,8 +15,8 @@ const CartItemDrink = ({ data, remove, index }) => {
   };
 
   const renderedItem = () => {
-    if (data.hasOwnProperty("selected")) {
-      return <div>Milk Type: {data.selected}</div>;
+    if (data.hasOwnProperty("MilkType")) {
+      return <div>Milk Type: {data.MilkType}</div>;
     } else if (data.hasOwnProperty("quantity")) {
       return <div>Quantity: {data.quantity}</div>;
     } else {
@@ -33,7 +33,7 @@ const CartItemDrink = ({ data, remove, index }) => {
       </div>
       <div className="cart-wrapper-price">
         <p>
-          ${data.price} | {data.item}
+          ${data.price} | {data.itemName}
         </p>
       </div>
       {renderedItem()}

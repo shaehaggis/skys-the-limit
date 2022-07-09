@@ -7,11 +7,9 @@ import Footer from "./components/Footer";
 import ShoppingCart from "./components/ShoppingCart";
 
 const App = () => {
-  const [displayed, setDisplayed] = useState({
+  const [display, setDisplay] = useState({
     food: "block",
     drink: "none",
-  });
-  const [display, setDisplay] = useState({
     footer: "none",
     cart: "none",
     menu: "block",
@@ -65,22 +63,24 @@ const App = () => {
   };
 
   const changeDisplayed = () => {
-    if (displayed.food === "block") {
-      setDisplayed({ food: "none", drink: "block" });
+    if (display.food === "block") {
+      setDisplay({ ...display, food: "none", drink: "block" });
     } else {
-      setDisplayed({ food: "block", drink: "none" });
+      setDisplay({ ...display, food: "block", drink: "none" });
     }
   };
 
   const toggleCart = () => {
     if (display.cart === "none") {
       setDisplay({
+        ...display,
         cart: "block",
         menu: "none",
         footer: "none",
       });
     } else {
       setDisplay({
+        ...display,
         cart: "none",
         menu: "block",
         footer: "block",
@@ -101,7 +101,7 @@ const App = () => {
           />
         </section>
         <FoodDrinkNav changeDisplayed={changeDisplayed} />
-        <section style={{ display: displayed["food"] }}>
+        <section style={{ display: display["food"] }}>
           <ItemsList
             items={items.food.BBQ}
             headerTitle="BBQ"
@@ -113,7 +113,7 @@ const App = () => {
             newCartItem={newCartItem}
           />
         </section>
-        <section style={{ display: displayed["drink"] }}>
+        <section style={{ display: display["drink"] }}>
           <ItemsList
             items={items.drink.Coffee}
             headerTitle="Coffee"

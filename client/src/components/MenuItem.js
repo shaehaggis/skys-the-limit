@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QuantityCounter from "./QuantityCounter";
 import MenuForm from "./MenuForm";
 
-const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
+const MenuItem = ({ itemInfo, newCartItem }) => {
   const [quantity, setQuantity] = useState(0);
   const [activeForm, setActiveForm] = useState("none");
 
@@ -15,15 +15,8 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
   };
 
   const onButtonClick = () => {
-    if (category === "Soft Drinks") {
-      newCartItem({
-        item: itemName,
-        imageSrc: imageSrc,
-        category: category,
-        quantity: quantity,
-        price: price,
-        totalPrice: price * quantity,
-      });
+    if (itemInfo.category === "Soft Drinks") {
+      newCartItem({ ...itemInfo, totalPrice: itemInfo.price * quantity });
     }
 
     if (quantity > 0) {
@@ -42,21 +35,16 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
     return sum;
   };
 
-  const computeForm = (formData) => {
+  const computeTotal = (formData) => {
     let cartItem = Object.assign(
-      {
-        item: itemName,
-        price: price,
-        totalPrice: price,
-        imageSrc: imageSrc,
-        category: category,
-      },
+      { ...itemInfo, totalPrice: itemInfo.price },
       formData
     );
     if (formData.hasOwnProperty("added")) {
-      let sum = findNewTotal(formData, parseFloat(price));
+      let sum = findNewTotal(formData, parseFloat(itemInfo.price));
       cartItem.totalPrice = sum.toFixed(2);
     }
+
     newCartItem(cartItem);
   };
 
@@ -64,18 +52,18 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
     <section className="menu-item">
       <section className="flex-container">
         <div className="image-container">
-          <img alt={itemName} src={imageSrc} />
+          <img alt={itemInfo.itemName} src={itemInfo.imageSrc} />
         </div>
         <div className="item-info-container">
           <div className="price-container">
             <div className="price" style={{ fontWeight: 800 }}>
-              ${price}
+              ${itemInfo.price}
             </div>
           </div>
         </div>
         <div className="final-section">
           <div className="item-name-container">
-            <div className="item-name">{itemName}</div>
+            <div className="item-name">{itemInfo.itemName}</div>
           </div>
           <QuantityCounter
             updateQuantity={updateQuantity}
@@ -91,10 +79,9 @@ const MenuItem = ({ itemName, imageSrc, price, category, newCartItem }) => {
       <section style={{ display: activeForm }}>
         <MenuForm
           quantity={quantity}
-          category={category}
-          item={itemName}
+          itemInfo={itemInfo}
           onCancel={() => setActiveForm("none")}
-          computeForm={computeForm}
+          computeTotal={computeTotal}
         />
       </section>
     </section>

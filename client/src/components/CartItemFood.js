@@ -32,7 +32,7 @@ const CartItemFood = ({ data, remove, index }) => {
       </div>
       <div className="cart-wrapper-price">
         <p>
-          ${data.price} | {data.item}
+          ${data.price} | {data.itemName}
         </p>
       </div>
       <div style={{ display: display.added }} className="cart-wrapper-add">
