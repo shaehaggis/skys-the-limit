@@ -27,7 +27,7 @@ const CartItemFood = ({ data, index }) => {
     });
   }, [data.added.length, data.removed.length, data.information]);
 
-  const calculatePrice = () => {
+  const calculateItemPrice = () => {
     let price = 0;
     
     if (data.hasOwnProperty("added")){
@@ -85,7 +85,7 @@ const CartItemFood = ({ data, index }) => {
       </div>
       <div>
         <p>
-          <strong>Total Item Price: ${calculatePrice()}</strong>
+          <strong>Total Item Price: ${calculateItemPrice()}</strong>
         </p>
       </div>
       <div className="cart-button-container">

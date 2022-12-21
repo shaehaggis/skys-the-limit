@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import CoffeeForm from "./CoffeeForm";
 import FoodForm from "./FoodForm";
 import Form from "react-bootstrap/Form";

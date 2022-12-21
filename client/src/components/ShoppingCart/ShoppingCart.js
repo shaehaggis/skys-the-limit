@@ -24,7 +24,7 @@ const ShoppingCart = () => {
   });
 
   //calculate total cart price
-  const calculatePrice = () => {
+  const calculateCartPrice = () => {
     let price = 0;
     shoppingCart.forEach(element => {
 
@@ -61,7 +61,7 @@ const ShoppingCart = () => {
           <span>Back to Menu</span>
         </button>
       {renderedShoppingCart}
-      <div className="total-price-container">Total Price: ${calculatePrice()}</div>
+      <div className="total-price-container">Total Price: ${calculateCartPrice()}</div>
       <div className="purchase-button-container">
         <Link to="/payment">
           <Button className="me-3" variant="dark">
