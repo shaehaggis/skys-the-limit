@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { Link } from 'react-router-dom';
+ 
 const FoodDrinkNav = ({ changeDisplayed }) => {
   const [active, setActive] = useState("food-button");
   const [foodColor, setFoodColor] = useState({
@@ -39,20 +40,24 @@ const FoodDrinkNav = ({ changeDisplayed }) => {
   };
   return (
     <div className="category-nav">
-      <button
+      <Link to="/food">
+        {/* <button
         className="food-button"
         style={{ backgroundColor: foodColor.bgColor, color: foodColor.color }}
         onClick={(e) => onButtonClick(e)}
-      >
+        > */}
         Food
-      </button>
-      <button
-        className="drink-button"
-        style={{ backgroundColor: drinkColor.bgColor, color: drinkColor.color }}
-        onClick={(e) => onButtonClick(e)}
-      >
-        Drink
-      </button>
+        {/* </button> */}
+      </Link>
+      <Link to="/drink">
+        {/* <button
+          className="drink-button"
+          style={{ backgroundColor: drinkColor.bgColor, color: drinkColor.color }}
+          onClick={(e) => onButtonClick(e)}
+        > */}
+          Drink
+        {/* </button> */}
+      </Link>
     </div>
   );
 };

@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
+import { ShoppingCartContext } from "../../Context/ShoppingCartContext";
 
-const CartItemFood = ({ data, remove, index }) => {
+const CartItemFood = ({ data, index }) => {
+  const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
+
   const [display, setDisplay] = useState({
     added: "none",
     removed: "none",
@@ -9,7 +12,8 @@ const CartItemFood = ({ data, remove, index }) => {
   });
 
   const onRemButtonClick = () => {
-    remove(index);
+    const newCart = shoppingCart.filter((item, i) => i !== index);
+    setShoppingCart(newCart);
   };
 
   useEffect(() => {
@@ -22,6 +26,25 @@ const CartItemFood = ({ data, remove, index }) => {
       info: info,
     });
   }, [data.added.length, data.removed.length, data.information]);
+
+  const calculatePrice = () => {
+    let price = 0;
+    
+    if (data.hasOwnProperty("added")){
+      data.added.forEach(ingredient => {
+        price += parseFloat(ingredient.price);
+      })
+    }
+
+    if (data.hasOwnProperty("removed")){
+      data.removed.forEach(ingredient => {
+        price -= parseFloat(ingredient.price);
+      })
+    }
+
+    price += parseFloat(data.price);
+    return String(price.toFixed(2));
+  }
 
   return (
     <div className="cart-flex">
@@ -62,7 +85,7 @@ const CartItemFood = ({ data, remove, index }) => {
       </div>
       <div>
         <p>
-          <strong>Total Item Price: ${data.totalPrice}</strong>
+          <strong>Total Item Price: ${calculatePrice()}</strong>
         </p>
       </div>
       <div className="cart-button-container">

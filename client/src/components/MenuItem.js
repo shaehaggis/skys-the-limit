@@ -1,51 +1,55 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ShoppingCartContext } from "../Context/ShoppingCartContext";
 import QuantityCounter from "./QuantityCounter";
-import MenuForm from "./MenuForm";
+import MenuForm from "./Forms/MenuForm";
 
-const MenuItem = ({ itemInfo, newCartItem }) => {
+const MenuItem = ({ itemInfo }) => {
+  
+  //quantity of item user wants to purchase. updates triggered by <QuantityCounter/>
   const [quantity, setQuantity] = useState(0);
+
+  //determines whether the item form is shown
   const [activeForm, setActiveForm] = useState("none");
 
+  const [, setShoppingCart] = useContext(ShoppingCartContext);
+
+  //updateQuantity() called by <QuantityCounter/> component when + or - is clicked
   const updateQuantity = (value) => {
     if (value === "+" && quantity < 9) {
-      setQuantity(quantity + 1);
+      setQuantity((quantity) => quantity + 1);
     } else if (value === "-" && quantity > 0) {
-      setQuantity(quantity - 1);
+      setQuantity((quantity) => quantity - 1);
     }
   };
 
-  const onButtonClick = () => {
+  const onAddButtonClick = () => {
+    //add straight to cart if soft drink, because there is no form
     if (itemInfo.category === "Soft Drinks") {
-      newCartItem({ ...itemInfo, totalPrice: itemInfo.price * quantity });
+      
+      let drinks = [];
+      for (let i = 0; i < quantity; i++){
+        drinks.push(itemInfo);
+      }
+
+      setShoppingCart(prev => ([...prev, ...drinks]));
+      return;
     }
 
+    //otherwise display form
     if (quantity > 0) {
       setActiveForm("block");
     }
   };
 
-  const findNewTotal = (formData, sum) => {
-    formData.added.forEach(({ price }) => {
-      sum += parseFloat(price);
-    });
-    formData.removed.forEach(({ price }) => {
-      sum -= parseFloat(price);
-    });
+  const addToCart = (formData) => {
 
-    return sum;
-  };
-
-  const computeTotal = (formData) => {
+    //add item data, along with the form data, to shopping cart
     let cartItem = Object.assign(
-      { ...itemInfo, totalPrice: itemInfo.price },
+      { ...itemInfo },
       formData
     );
-    if (formData.hasOwnProperty("added")) {
-      let sum = findNewTotal(formData, parseFloat(itemInfo.price));
-      cartItem.totalPrice = sum.toFixed(2);
-    }
 
-    newCartItem(cartItem);
+    setShoppingCart(prev => ([...prev, cartItem]));
   };
 
   return (
@@ -70,7 +74,7 @@ const MenuItem = ({ itemInfo, newCartItem }) => {
             quantity={quantity}
           />
           <div className="button-container">
-            <button className="add-to-cart-button" onClick={onButtonClick}>
+            <button className="add-to-cart-button" onClick={onAddButtonClick}>
               Add
             </button>
           </div>
@@ -81,7 +85,7 @@ const MenuItem = ({ itemInfo, newCartItem }) => {
           quantity={quantity}
           itemInfo={itemInfo}
           onCancel={() => setActiveForm("none")}
-          computeTotal={computeTotal}
+          addToCart={addToCart}
         />
       </section>
     </section>
