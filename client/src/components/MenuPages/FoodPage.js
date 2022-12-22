@@ -19,7 +19,7 @@ const FoodPage = () => {
               headerTitle="Most Popular"
             />
           </section>
-          <FoodDrinkNav/>
+          <FoodDrinkNav active="food"/>
           <section>
             <ItemsList
               items={items.food.BBQ}

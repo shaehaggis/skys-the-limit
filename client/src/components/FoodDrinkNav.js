@@ -1,62 +1,24 @@
 import React from "react";
 import { Link } from 'react-router-dom';
  
-const FoodDrinkNav = () => {
-  // const [active, setActive] = useState("food-button");
-  // const [foodColor, setFoodColor] = useState({
-  //   bgColor: "black",
-  //   color: "white",
-  // });
-  // const [drinkColor, setDrinkColor] = useState({
-  //   bgColor: "white",
-  //   color: "grey",
-  // });
-
-  // const onButtonClick = (e) => {
-  //   if (e.target.className !== active) {
-  //     if (foodColor.bgColor === "white") {
-  //       setFoodColor({
-  //         bgColor: "black",
-  //         color: "white",
-  //       });
-  //       setDrinkColor({
-  //         bgColor: "white",
-  //         color: "grey",
-  //       });
-  //     } else {
-  //       setFoodColor({
-  //         bgColor: "white",
-  //         color: "grey",
-  //       });
-  //       setDrinkColor({
-  //         bgColor: "black",
-  //         color: "white",
-  //       });
-  //     }
-
-  //     setActive(e.target.clasName);
-  //     changeDisplayed();
-  //   }
-  // };
+const FoodDrinkNav = ({ active }) => {
   return (
     <div className="category-nav">
-      <Link to="/food">
-        {/* <button
+      <Link to="/food" style={{ minWidth: '30%' }}>
+        <button
         className="food-button"
-        style={{ backgroundColor: foodColor.bgColor, color: foodColor.color }}
-        onClick={(e) => onButtonClick(e)}
-        > */}
-        Food
-        {/* </button> */}
+        style={{ backgroundColor: active === "food" ? 'black' : 'white', color: active === "food" ? 'white' : 'lightgrey' }}
+        >
+          Food
+        </button>
       </Link>
-      <Link to="/drink">
-        {/* <button
+      <Link to="/drink" style={{ minWidth: '30%' }}>
+        <button
           className="drink-button"
-          style={{ backgroundColor: drinkColor.bgColor, color: drinkColor.color }}
-          onClick={(e) => onButtonClick(e)}
-        > */}
+          style={{ backgroundColor: active === "food" ? 'white' : 'black', color: active === "food" ? 'lightgrey' : 'white' }}
+        >
           Drink
-        {/* </button> */}
+        </button>
       </Link>
     </div>
   );

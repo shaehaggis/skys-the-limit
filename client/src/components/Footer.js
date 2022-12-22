@@ -36,7 +36,7 @@ const Footer = () => {
           <div className="running-quantity">Total: {shoppingCart.length} items</div>
           <div className="running-price">${calculatePrice()}</div>
       </div>
-      <Link to="/cart">
+      <Link to="/cart" style={{ width: '35%' }}>
         <button className="view-cart-button">
           View Cart
         </button>

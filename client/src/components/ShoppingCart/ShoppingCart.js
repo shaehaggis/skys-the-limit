@@ -49,22 +49,33 @@ const ShoppingCart = () => {
   }
 
   if (shoppingCart.length === 0){
-    return <div>No Items in your Cart!</div>
+    return (
+    <div>
+      <button onClick={() => navigate(-1)} className="cart-back-button">
+        <span>
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </span>
+        <span>Back to Menu</span>
+      </button>
+      <h2 style={{ textAlign: "center", border: "none" }}>No Items in your Cart!</h2>
+    </div>
+    )
   }
 
   return (
     <section>
-        <button onClick={() => navigate(-1)} className="cart-back-button">
-          <span>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </span>
-          <span>Back to Menu</span>
-        </button>
+      <button onClick={() => navigate(-1)} className="cart-back-button">
+        <span>
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </span>
+        <span>Back to Menu</span>
+      </button>
+      <h2 style={{ textAlign: "center", border: "none" }}>Your Cart:</h2>
       {renderedShoppingCart}
       <div className="total-price-container">Total Price: ${calculateCartPrice()}</div>
       <div className="purchase-button-container">
-        <Link to="/payment">
-          <Button className="me-3" variant="dark">
+        <Link to="/payment" style={{ width: '60%' }}>
+          <Button variant="dark">
             Confirm Payment
           </Button>
         </Link>
