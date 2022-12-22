@@ -219,27 +219,28 @@ img {
 }
 
 .food-button {
-  width: 40%;
-  padding: 3%;
+  width: 100%;
   font-size: 4vmin;
   border-bottom-left-radius: 20% 60%;
+  padding: 3%;
   color: white;
   background-color: black;
 }
 
 .drink-button {
-  width: 40%;
-  padding: 3%;
+  width: 100%;
   font-size: 4vmin;
   border-bottom-right-radius: 20% 60%;
+  padding: 3%;
   color: #c0c0c0;
   background-color: white;
 }
 
 footer {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  width: 98vw;
+  width: 100%;
   position: fixed;
   bottom: 0%;
   left: 0%;
@@ -260,11 +261,14 @@ footer {
   color: white;
 }
 
-footer button {
-  margin-left: 19%;
-  width: 27%;
-  padding: 1%;
-  font-size: 5vmin;
+.view-cart-button {
+  padding: 4% 1.5%;
+  font-size: 4vmin;
+  width: 100%;
+}
+
+.menu-item:last-of-type {
+  margin-bottom: 30%;
 }
 
 .cart-flex {
@@ -283,7 +287,7 @@ footer button {
   width: 50%;
 }
 
-.cart-flex > div {
+.cart-flex>div {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -325,14 +329,6 @@ footer button {
   width: 30%;
   text-align: center;
 }
-
-/* .cart-edit-button {
-    border-radius: 5%;
-    background-color: black;
-    color: white;
-    font-size: 4.5vmin;
-    border: none;
-  } */
 
 .cart-remove-button {
   border-radius: 5%;
@@ -407,11 +403,11 @@ p {
 }
 
 .purchase-button-container button {
-  width: 60%;
   padding: 5%;
   font-size: 4.5vmin;
   background-color: black;
   color: white;
+  width: 100%;
 }
 
 .last-one,

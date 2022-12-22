@@ -1,15 +1,18 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import Form from "react-bootstrap/Form";
-import items from "../data.json";
+import items from "../../data.json";
 
-const CoffeeForm = forwardRef(({ formData, setFormData, itemName }, ref) => {
+const CoffeeForm = forwardRef(({ itemName }, ref) => {
   const [milkType, setMilkType] = useState("Full Cream");
 
   useImperativeHandle(ref, () => ({
+    //reset milk type to default
     triggerSubmit() {
       setMilkType("Full Cream");
       return { MilkType: milkType };
     },
+
+    //reset milk type to default after cancelling
     cancel() {
       setMilkType("Full Cream");
     },

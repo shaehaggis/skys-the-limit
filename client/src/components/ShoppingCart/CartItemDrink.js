@@ -1,25 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
+import { ShoppingCartContext } from "../../Context/ShoppingCartContext";
 
-const CartItemDrink = ({ data, remove, index }) => {
+
+const CartItemDrink = ({ data, index }) => {
   const [displayInfo, setDisplayInfo] = useState("none");
+  const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
 
+  //only display comments/info if it exists in the data
   useEffect(() => {
     if (data.information !== "" || data.information !== undefined) {
       setDisplayInfo("block");
     }
   }, [data.information]);
 
+  //remove item from cart
   const onRemButtonClick = () => {
-    remove(index);
+    const newCart = shoppingCart.filter((item, i) => i !== index);
+    setShoppingCart(newCart);
   };
 
+  //display either milk type or quantity if it is coffee/soft drink
   const renderedItem = () => {
+    
+    //only coffee has milktype
     if (data.hasOwnProperty("MilkType")) {
       return <div>Milk Type: {data.MilkType}</div>;
-    } else if (data.hasOwnProperty("quantity")) {
+    } 
+    
+    //only soft drinks display a quantity
+    else if (data.hasOwnProperty("quantity")) {
       return <div>Quantity: {data.quantity}</div>;
-    } else {
+    } 
+    
+    else {
       return "";
     }
   };
@@ -36,7 +50,7 @@ const CartItemDrink = ({ data, remove, index }) => {
           ${data.price} | {data.itemName}
         </p>
       </div>
-      {renderedItem()}
+      {renderedItem}
       <div style={{ display: displayInfo }} className="cart-wrapper-comments">
         <p>
           <em>{data.information}</em>
@@ -44,7 +58,7 @@ const CartItemDrink = ({ data, remove, index }) => {
       </div>
       <div>
         <p>
-          <strong>Total Item Price: ${data.totalPrice}</strong>
+          <strong>Total Item Price: ${data.price}</strong>
         </p>
       </div>
       <div className="cart-button-container">

@@ -5,13 +5,20 @@ import Form from "react-bootstrap/Form";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 
-const MenuForm = ({ itemInfo, quantity, onCancel, computeTotal }) => {
+const MenuForm = ({ itemInfo, quantity, onCancel, addToCart }) => {
+  
+  //refs to trigger form submission
   const foodRef = useRef(null);
   const coffeeRef = useRef(null);
 
+  //the item number being processed
+  //starts at item #1 and resets once item #quantity has been confirmed
   const [currentStep, setCurrentStep] = useState(1);
+  
+  //any additional comments user wants to make about their order
   const [extraInfo, setExtraInfo] = useState("");
 
+  //which form to render for the item?
   const formType = () => {
     if (itemInfo.category === "BBQ" || itemInfo.category === "Burgers") {
       return (
@@ -30,15 +37,22 @@ const MenuForm = ({ itemInfo, quantity, onCancel, computeTotal }) => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
+
+    //obtain milk type selected by user (forward ref in <CoffeeForm />)
     let formData =
       foodRef.current !== null
         ? foodRef.current.triggerSubmit()
         : coffeeRef.current.triggerSubmit();
 
+    // add extra info, if any to the formData
     formData = { ...formData, information: extraInfo };
-    setExtraInfo("");
-    computeTotal(formData);
 
+    //reset extra info in form
+    setExtraInfo("");
+
+    addToCart(formData);
+
+    //continue to show form if there are more items to process
     if (currentStep !== quantity) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -46,14 +60,21 @@ const MenuForm = ({ itemInfo, quantity, onCancel, computeTotal }) => {
     }
   };
 
+  //when cancel button is clicked
   const exitForm = () => {
     setCurrentStep(1);
+
+    //resets formData to default
     if (foodRef.current !== null) {
       foodRef.current.cancel();
     }
+
+    //reset formData to default
     if (coffeeRef.current !== null) {
       coffeeRef.current.cancel();
     }
+
+    //hides form
     onCancel();
   };
 
