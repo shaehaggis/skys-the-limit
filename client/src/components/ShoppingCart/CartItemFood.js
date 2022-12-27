@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import { ShoppingCartContext } from "../../Context/ShoppingCartContext";
+import { calculateCartItemPrice } from "../../Functions/calculateCartItemPrice";
 
 const CartItemFood = ({ data, index }) => {
   const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
@@ -16,6 +17,7 @@ const CartItemFood = ({ data, index }) => {
     setShoppingCart(newCart);
   };
 
+  //dont show sections if they are not in cart object
   useEffect(() => {
     const added = data.added.length > 0 ? "block" : "none";
     const removed = data.removed.length > 0 ? "block" : "none";
@@ -27,35 +29,18 @@ const CartItemFood = ({ data, index }) => {
     });
   }, [data.added.length, data.removed.length, data.information]);
 
-  const calculateItemPrice = () => {
-    let price = 0;
-    
-    if (data.hasOwnProperty("added")){
-      data.added.forEach(ingredient => {
-        price += parseFloat(ingredient.price);
-      })
-    }
-
-    if (data.hasOwnProperty("removed")){
-      data.removed.forEach(ingredient => {
-        price -= parseFloat(ingredient.price);
-      })
-    }
-
-    price += parseFloat(data.price);
-    return String(price.toFixed(2));
-  }
+  
 
   return (
     <div className="cart-flex">
       <div className="img-wrapper">
         <div>
-          <img alt={data.item} className="cart-img" src={data.imageSrc} />
+          <img alt={data.item_name} className="cart-img" src={data.img_path} />
         </div>
       </div>
       <div className="cart-wrapper-price">
         <p>
-          ${data.price} | {data.itemName}
+          ${data.item_price} | {data.item_name}
         </p>
       </div>
       <div style={{ display: display.added }} className="cart-wrapper-add">
@@ -85,7 +70,7 @@ const CartItemFood = ({ data, index }) => {
       </div>
       <div>
         <p>
-          <strong>Total Item Price: ${calculateItemPrice()}</strong>
+          <strong>Total Item Price: ${calculateCartItemPrice(data)}</strong>
         </p>
       </div>
       <div className="cart-button-container">

@@ -3,7 +3,7 @@ import { ShoppingCartContext } from "../Context/ShoppingCartContext";
 import QuantityCounter from "./QuantityCounter";
 import MenuForm from "./Forms/MenuForm";
 
-const MenuItem = ({ itemInfo }) => {
+const MenuItem = ({ itemInfo, ingredients }) => {
   
   //quantity of item user wants to purchase. updates triggered by <QuantityCounter/>
   const [quantity, setQuantity] = useState(0);
@@ -56,18 +56,18 @@ const MenuItem = ({ itemInfo }) => {
     <section className="menu-item">
       <section className="flex-container">
         <div className="image-container">
-          <img alt={itemInfo.itemName} src={itemInfo.imageSrc} />
+          <img alt={itemInfo.item_name} src={itemInfo.img_path} />
         </div>
         <div className="item-info-container">
           <div className="price-container">
             <div className="price" style={{ fontWeight: 800 }}>
-              ${itemInfo.price}
+              ${itemInfo.item_price.toFixed(2)}
             </div>
           </div>
         </div>
         <div className="final-section">
           <div className="item-name-container">
-            <div className="item-name">{itemInfo.itemName}</div>
+            <div className="item-name">{itemInfo.item_name}</div>
           </div>
           <QuantityCounter
             updateQuantity={updateQuantity}
@@ -86,6 +86,7 @@ const MenuItem = ({ itemInfo }) => {
           itemInfo={itemInfo}
           onCancel={() => setActiveForm("none")}
           addToCart={addToCart}
+          ingredients={ingredients}
         />
       </section>
     </section>

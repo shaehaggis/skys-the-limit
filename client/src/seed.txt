@@ -1,0 +1,182 @@
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Flat White', 4.00 , 'https://cdn.vox-cdn.com/thumbor/sUEalDBybUNarAb0t3uzWsH7ORs=/0x0:1000x750/1200x800/filters:focal(0x0:1000x750)/cdn.vox-cdn.com/uploads/chorus_image/image/45140100/6792268281_d0822743b8_b.0.0.jpg', 'drink', 'coffee');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Macchiato', 4.00 , 'https://www.acouplecooks.com/wp-content/uploads/2020/10/how-to-make-a-macchiato-003s.jpg', 'drink', 'coffee');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Capuccino', 4.00 , 'https://static01.nyt.com/images/2015/10/02/fashion/02CAPP3SUB/02CAPP3SUB-jumbo.jpg', 'drink', 'coffee');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Affogato', 4.00 , 'https://static01.nyt.com/images/2021/08/15/magazine/affogato/affogato-articleLarge-v2.jpg', 'drink', 'coffee');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Latte', 4.00 , 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Latte_art_3.jpg', 'drink', 'coffee');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Mocha', 4.00 , 'https://athome.starbucks.com/sites/default/files/2021-06/1_CAH_CaffeMocha_Hdr_2880x16602.jpg', 'drink', 'coffee');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Hot Chocolate', 4.00 , 'https://www.simplyrecipes.com/thmb/7SL13a8Ln1rpfp7AQSdNGHxI0D4=/2000x1333/filters:no_upscale():max_bytes(150000):strip_icc()/Hot-Chocolate-LEAD-4-90a8f6755c6c45fd84f93762270bcd69.jpg', 'drink', 'coffee');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Coke Original', 2.00 , 'https://www.easydrinks.com.au/auto/thumbnail/persistent/catalogue_images/products/coke-can-375ml.jpg?maxheight=800&style=cropped&maxwidth=800', 'drink', 'soft drink');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Coke No Sugar', 2.00 , 'https://cdn.shopify.com/s/files/1/0043/9258/3217/products/Coca-Coka-No-Sugar-can_de24556c-f324-4afa-b8d9-bf9cf7a1b463_2048x.png?v=1620308634', 'drink', 'soft drink');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Solo', 2.00 , 'https://assets.kogan.com/images/cub/CUB-SOLO375/1-313c14c8ab-10664277671966.png?auto=webp&canvas=753%2C502&fit=bounds&height=502&quality=90&width=753', 'drink', 'soft drink');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Fanta', 2.00 , 'https://kellysdistributors.com.au/wp-content/uploads/394-1-1-2.jpg', 'drink', 'soft drink');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Sprite', 2.00 , 'https://cdn.productreview.com.au/resize/listing-picture/2457406b-938e-391f-ae18-e6b59bebe402?width=1200&height=630&withoutEnlargement=true&v=2', 'drink', 'soft drink');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Sausage Sizzle', 2.50 , 'https://cdn.shopify.com/s/files/1/1827/5109/articles/mr-perfect-sausage-sizzle_900x.jpg?v=1581678763', 'food', 'bbq');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Bacon & Egg Sandwich', 5.00 , 'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/2/14/0/FNK_Maple-Bacon-Grilled-Cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1382542424660.jpeg', 'food', 'bbq');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Deluxe (Bacon, Egg & Sausage)', 8.00 , 'https://www.finedininglovers.com/sites/g/files/xknfdk626/files/styles/open_graph_image/public/Original_5593_StockFood-00949621.jpg.jpg?itok=fqNi5pz2', 'food', 'bbq');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Chicken Burger', 6.00 , 'https://images.immediate.co.uk/production/volatile/sites/2/2017/06/Butchies-2-1.jpg', 'food', 'burger');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Beef Burger', 6.00 , 'https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/beef-burger-with-caramelised-onion-jam-d6d4260d.jpg', 'food', 'burger');
+
+INSERT INTO menu_items (item_name, item_price, img_path, type, category)
+VALUES ('Veggie Burger', 8.00 , 'https://assets.epicurious.com/photos/5e4c65cfd57b3b000872c652/1:1/w_2763,h_2763,c_limit/VeggieBurger_RECIPE_IG_021320_516_VOG_final.jpg', 'food', 'burger');
+
+INSERT INTO ingredients (name, price)
+VALUES ('Chicken Patty', 3.00);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Beef Patty', 3.00);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Veggie Patty', 3.00);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Lettuce', 0.50);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Tomato', 0.50);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Onion', 1.00);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Pickles', 0.50);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Bread', 0.50);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Beef Sausage', 2.50);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Bacon', 2.00);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Egg', 2.00);
+
+INSERT INTO ingredients (name, price)
+VALUES ('Bun', 1.00);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (13, 8);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (13, 9);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (13, 6);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (14, 8);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (14, 10);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (14,11);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (15, 8);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (15, 9);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (15, 10);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (15, 11);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (16, 1);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (16, 4);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (16, 5);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (16, 7);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (16, 12);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (17, 2);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (17, 4);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (17, 5);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (17, 7);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (17, 12);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (18, 3);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (18, 4);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (18, 5);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (18, 7);
+
+INSERT INTO item_ingredients (item_id, ingredient_id)
+VALUES (18, 12);
+
+INSERT INTO item_sales (item_id, date_time, order_id)
+VALUES (1, to_timestamp('2022-12-23 12:34:56', 'YYYY-MM-DD HH24:MI:SS', DEFAULT);
+
+INSERT INTO item_sales (item_id, date_time, order_id)
+VALUES (14, to_timestamp('2022-12-23 13:34:56', 'YYYY-MM-DD HH24:MI:SS', DEFAULT);
+
+INSERT INTO item_sales (item_id, date_time, order_id)
+VALUES (1, to_timestamp('2022-12-24 12:34:56', 'YYYY-MM-DD HH24:MI:SS', DEFAULT);
+
+INSERT INTO item_sales (item_id, date_time, order_id)
+VALUES (1, to_timestamp('2022-12-24 13:34:56', 'YYYY-MM-DD HH24:MI:SS', DEFAULT);
+
+INSERT INTO item_sales (item_id, date_time, order_id)
+VALUES (14, to_timestamp('2022-12-25 13:04:56', 'YYYY-MM-DD HH24:MI:SS', DEFAULT);
+
+INSERT INTO item_sales (item_id, date_time, order_id)
+VALUES (15, to_timestamp('2022-12-25 14:34:56', 'YYYY-MM-DD HH24:MI:SS', DEFAULT);

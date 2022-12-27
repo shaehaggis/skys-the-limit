@@ -1,35 +1,49 @@
-import items from "../../data.json";
 import React, { useContext } from "react";
 import ItemsList from "../ItemsList";
 import FoodDrinkNav from "../FoodDrinkNav";
 import Footer from "../Footer";
 import { ShoppingCartContext } from "../../Context/ShoppingCartContext";
 
-const FoodPage = () => {
+const FoodPage = ( { items } ) => {
   const [shoppingCart, ] = useContext(ShoppingCartContext)
 
-  return (
+  //get all the category names for food
+  const getCategories = () => {
+    const categories = new Set(items[0].items
+                              .filter((item) => item.type === 'food')
+                              .map((item) => item.category));
+    return categories;
+  }                         
+
+  const renderedCategories = () => {
+      const categories = getCategories();
+      
+      let renderedElements = [];
+      categories.forEach((element, index) => {
+        const categoryItems = items[0].items.filter((el) => el.category === element);
+        renderedElements.push(<ItemsList key={index} headerTitle={element.toUpperCase()} items={categoryItems} ingredients={items[1].ingredients}/>)
+      });
+      
+      return renderedElements;
+  }
+
+  return (items.length === 0) ? <>Loading...</> :
+
+  (
     <main>
       {/* Logo */}
       <h1>My app</h1>
         <div>
           <section>
             <ItemsList
-              items={items.MostPopularitems}
+              items={items[2].mostPopular}
               headerTitle="Most Popular"
+              ingredients={items[1].ingredients}
             />
           </section>
           <FoodDrinkNav active="food"/>
           <section>
-            <ItemsList
-              items={items.food.BBQ}
-              headerTitle="BBQ"
-              
-            />
-            <ItemsList
-              items={items.food.Burgers}
-              headerTitle="Burgers"
-            />
+            {renderedCategories()}
           </section>
         </div>
         <div style={{ display: shoppingCart.length > 0 ? "block" : "none" }}>
