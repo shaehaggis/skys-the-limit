@@ -1,8 +1,9 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import Form from "react-bootstrap/Form";
-import items from "../../data.json";
 
-const CoffeeForm = forwardRef(({ itemName }, ref) => {
+const milk_types = ["Full Cream", "Soy", "Lite", "Almond", "Oat", "Rice"];
+
+const CoffeeForm = forwardRef(({ itemInfo }, ref) => {
   const [milkType, setMilkType] = useState("Full Cream");
 
   useImperativeHandle(ref, () => ({
@@ -18,16 +19,16 @@ const CoffeeForm = forwardRef(({ itemName }, ref) => {
     },
   }));
 
-  const MilkTypes = items["milk types"].map((type, index) => {
+  const MilkTypes = milk_types.map((type, index) => {
     return (
       <Form.Check
         onChange={(e) => setMilkType(e.currentTarget.value)}
-        checked={milkType === type.name}
+        checked={milkType === type}
         inline
         key={index}
-        label={type.name}
-        value={type.name}
-        name={`milk-type-${itemName.replace(/\s+/g, "")}`}
+        label={type}
+        value={type}
+        name={`milk-type-${itemInfo.item_name.replace(/\s+/g, "")}`}
         type="radio"
       />
     );

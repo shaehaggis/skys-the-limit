@@ -15,17 +15,29 @@ const CartContextProvider = ({ children }) => (
 )
 
 const App = () => {
+  const [items, setItems] = useState([]);
 
-  const items = axios.get('/items')
-                     .then((response) => console.log(response))
-                     .catch((err) => console.log(err));
+  useEffect(() => {
+    const getItems = async () => 
+    {
+      await axios.get('/items')
+      .then((response) => {
+        console.log(response.data); 
+        setItems(response.data)
+      })
+      .catch((err) => console.log(err));
+    }
+
+    getItems();
+  }, []);
+  
 
   return (
     <CartContextProvider>
       <Routes>
         <Route path="/" element={<Navigate to="/food" />}/>
-        <Route path="/food" element={<FoodPage/>}/>
-        <Route path="/drink" element={<DrinksPage/>}/>
+        <Route path="/food" element={<FoodPage items={items}/>}/>
+        <Route path="/drink" element={<DrinksPage items={items}/>}/>
         <Route path="/cart" element={<ShoppingCart />}/>
         <Route path="/payment" element={<PaymentForm />}/>
       </Routes>

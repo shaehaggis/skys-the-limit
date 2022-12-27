@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 
-const MenuForm = ({ itemInfo, quantity, onCancel, addToCart }) => {
+const MenuForm = ({ itemInfo, quantity, onCancel, addToCart, ingredients }) => {
   
   //refs to trigger form submission
   const foodRef = useRef(null);
@@ -20,16 +20,16 @@ const MenuForm = ({ itemInfo, quantity, onCancel, addToCart }) => {
 
   //which form to render for the item?
   const formType = () => {
-    if (itemInfo.category === "BBQ" || itemInfo.category === "Burgers") {
+    if (itemInfo.type === 'food') {
       return (
         <FoodForm
-          itemName={itemInfo.itemName}
-          category={itemInfo.category}
+          itemInfo={itemInfo}
           ref={foodRef}
+          ingredients={ingredients}
         />
       );
-    } else if (itemInfo.category === "Coffee") {
-      return <CoffeeForm itemName={itemInfo.itemName} ref={coffeeRef} />;
+    } else if (itemInfo.category === "coffee") {
+      return <CoffeeForm itemInfo={itemInfo} ref={coffeeRef} />;
     } else {
       return "";
     }

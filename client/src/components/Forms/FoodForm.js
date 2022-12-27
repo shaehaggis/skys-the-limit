@@ -1,39 +1,31 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import Form from "react-bootstrap/Form";
-import items from "../../data.json";
 import { filterObject } from "../../Functions/filterObject";
 
 const FoodForm = forwardRef(
-  ({ itemName, category }, ref) => {
-    
-    //find the location of the item in the items array
-    const findIndex = () => {
-      return items.food[category].findIndex(
-        (element) => element.name === itemName
-      );
-    };
+  ({ itemInfo, ingredients }, ref) => {
 
     const initialiseState = (task) => {
 
-      //if these are the ingredients to add to an item, then get a list of ingredients
+      //if these are the ingredients to add to an item, then get the list of ingredients
       //if these are the ingredients to remove from an item, then lookup the ingredients of the item
-      let ingredients =
+      let ingredientsArray =
         task === "add"
-          ? items.ingredients
-          : items.food[category][findIndex()].ingredients;
+          ? ingredients
+          : itemInfo.ingredients;
       
       //map each ingredient to an object
-      let ingredientsObject = ingredients.map((element) => {
+      let mappedIngredients = ingredientsArray.map((element) => {
         return (
           {
-            ingredient: `${element.ingredient}`,
-            price: `${element.price}`,
+            ingredient: `${element.ingredient_name}`,
+            price: `${element.ingredient_price.toFixed(2)}`,
             checked: false,
           }
         )
       })
 
-      return ingredientsObject;
+      return mappedIngredients;
     };
 
     const [formData, setFormData] = useState({
@@ -72,7 +64,7 @@ const FoodForm = forwardRef(
     // task = can be either "added" or "removed"
     // OUTPUTS
     const getIngredients = (arr, stateArr, task) => {
-      const ingredients = arr.map(({ ingredient, price }, i) => {
+      const ingredients = arr.map(({ ingredient_name, ingredient_price }, i) => {
         return (
           <Form.Check
             inline
@@ -80,9 +72,9 @@ const FoodForm = forwardRef(
             checked={stateArr[i].checked}
             key={i}
             type="checkbox"
-            value={ingredient}
-            label={`${ingredient} $${price}`}
-            name={`${task}-ingredients-${itemName.replace(/\s+/g, "")}`}
+            value={ingredient_name}
+            label={`${ingredient_name} $${ingredient_price.toFixed(2)}`}
+            name={`${task}-ingredients-${itemInfo.item_name.replace(/\s+/g, "")}`}
           />
         );
       });
@@ -116,14 +108,14 @@ const FoodForm = forwardRef(
 
     //get the array of checkboxes for ingredients to add to item
     const AddIngredients = getIngredients(
-      items.ingredients,
+      ingredients,
       formData.added,
       "add"
     );
 
     //get the array of checkboxes for ingredients to remove from an item
     const RemoveIngredients = getIngredients(
-      items.food[category][findIndex()].ingredients,
+      itemInfo.ingredients,
       formData.removed,
       "remove"
     );

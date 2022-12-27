@@ -42,12 +42,12 @@ const CartItemDrink = ({ data, index }) => {
     <div className="cart-flex">
       <div className="img-wrapper">
         <div>
-          <img alt={data.item} className="cart-img" src={data.imageSrc} />
+          <img alt={data.item_name} className="cart-img" src={data.img_path} />
         </div>
       </div>
       <div className="cart-wrapper-price">
         <p>
-          ${data.price} | {data.itemName}
+          ${data.item_price.toFixed(2)} | {data.item_name}
         </p>
       </div>
       {renderedItem}
@@ -58,7 +58,7 @@ const CartItemDrink = ({ data, index }) => {
       </div>
       <div>
         <p>
-          <strong>Total Item Price: ${data.price}</strong>
+          <strong>Total Item Price: ${data.item_price.toFixed(2)}</strong>
         </p>
       </div>
       <div className="cart-button-container">

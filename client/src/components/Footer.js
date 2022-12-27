@@ -24,7 +24,7 @@ const Footer = () => {
         })
       }
 
-      price += parseFloat(element.price);
+      price += parseFloat(element.item_price);
     });
 
     return price.toFixed(2);

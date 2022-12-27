@@ -12,7 +12,7 @@ const ShoppingCart = () => {
   const [shoppingCart, ] = useContext(ShoppingCartContext);
 
   const renderedShoppingCart = shoppingCart.map((item, index) => {
-    if (item.category === "BBQ" || item.category === "Burgers") {
+    if (item.type === 'food') {
       return (
         <CartItemFood key={index} data={item} index={index} />
       );
@@ -42,7 +42,7 @@ const ShoppingCart = () => {
         })
       }
 
-      price += parseFloat(element.price);
+      price += parseFloat(element.item_price);
     });
 
     return price.toFixed(2);
