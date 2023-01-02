@@ -18,28 +18,27 @@ const App = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const getItems = async () => 
-    {
-      await axios.get('/items')
-      .then((response) => {
-        console.log(response.data); 
-        setItems(response.data)
-      })
-      .catch((err) => console.log(err));
+    const getItems = async () => {
+      await axios.get('http://localhost:3001/items')
+        .then((response) => {
+          console.log(response.data);
+          setItems(response.data)
+        })
+        .catch((err) => console.log(err));
     }
 
     getItems();
   }, []);
-  
+
 
   return (
     <CartContextProvider>
       <Routes>
-        <Route path="/" element={<Navigate to="/food" />}/>
-        <Route path="/food" element={<FoodPage items={items}/>}/>
-        <Route path="/drink" element={<DrinksPage items={items}/>}/>
-        <Route path="/cart" element={<ShoppingCart />}/>
-        <Route path="/payment" element={<PaymentForm />}/>
+        <Route path="/" element={<Navigate to="/food" />} />
+        <Route path="/food" element={<FoodPage items={items} />} />
+        <Route path="/drink" element={<DrinksPage items={items} />} />
+        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/payment" element={<PaymentForm />} />
       </Routes>
     </CartContextProvider>
   );
