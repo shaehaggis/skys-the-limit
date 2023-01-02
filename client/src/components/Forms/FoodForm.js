@@ -18,8 +18,9 @@ const FoodForm = forwardRef(
       let mappedIngredients = ingredientsArray.map((element) => {
         return (
           {
-            ingredient: `${element.ingredient_name}`,
-            price: `${element.ingredient_price.toFixed(2)}`,
+            id: element.id,
+            ingredient: element.ingredient_name,
+            price: element.ingredient_price.toFixed(2),
             checked: false,
           }
         )

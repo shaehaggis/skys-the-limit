@@ -1,18 +1,27 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { PaymentForm, CreditCard } from "react-square-web-payments-sdk";
 import axios from "axios";
+import { ShoppingCartContext } from "../Context/ShoppingCartContext";
+import { filterShoppingCart } from "../Functions/filterShoppingCart";
 
-const PaymentsForm = ({ amount, confirm }) => {
+const PaymentsForm = () => {
+  const [shoppingCart, ] = useContext(ShoppingCartContext);
+
   const submitPayment = async (token, buyer) => {
     console.info({ token, buyer });
-    const response = await axios.post("http://localhost:5000/api/payment", {
-      amount: amount * 100,
+    if (shoppingCart.length < 1){
+      console.log("shopping cart is empty");
+      return;
+    }
+
+    const response = await axios.post("/api/payment", {
       token: token.token,
+      shoppingCart: filterShoppingCart(shoppingCart)
     });
 
     console.log(response);
     if (response.status === 200) {
-      confirm();
+      console.log("yay");
     }
   };
 

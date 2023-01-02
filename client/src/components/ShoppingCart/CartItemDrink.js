@@ -50,7 +50,7 @@ const CartItemDrink = ({ data, index }) => {
           ${data.item_price.toFixed(2)} | {data.item_name}
         </p>
       </div>
-      {renderedItem}
+      {renderedItem()}
       <div style={{ display: displayInfo }} className="cart-wrapper-comments">
         <p>
           <em>{data.information}</em>

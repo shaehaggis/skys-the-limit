@@ -24,7 +24,7 @@ const MenuItem = ({ itemInfo, ingredients }) => {
 
   const onAddButtonClick = () => {
     //add straight to cart if soft drink, because there is no form
-    if (itemInfo.category === "Soft Drinks") {
+    if (itemInfo.category === "soft drink") {
       
       let drinks = [];
       for (let i = 0; i < quantity; i++){
