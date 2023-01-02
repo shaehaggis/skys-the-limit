@@ -6,7 +6,7 @@ router.get('/items', async (req, res) => {
     //get all menu items and their ingredients
     const queryAllItems = `SELECT menu_items.*, 
                         (CASE WHEN COUNT(item_ingredients.item_id) = 0 THEN NULL ELSE 
-                        ARRAY_AGG(jsonb_build_object('ingredient_name', ingredients.ingredient_name, 'ingredient_price', ingredients.ingredient_price)) END ) AS ingredients
+                        ARRAY_AGG(jsonb_build_object('id', ingredients.id, 'ingredient_name', ingredients.ingredient_name, 'ingredient_price', ingredients.ingredient_price)) END ) AS ingredients
                         FROM menu_items
                         LEFT JOIN item_ingredients
                         ON menu_items.id = item_ingredients.item_id

@@ -40,7 +40,7 @@ const CartItemFood = ({ data, index }) => {
       </div>
       <div className="cart-wrapper-price">
         <p>
-          ${data.item_price} | {data.item_name}
+          ${data.item_price.toFixed(2)} | {data.item_name}
         </p>
       </div>
       <div style={{ display: display.added }} className="cart-wrapper-add">
